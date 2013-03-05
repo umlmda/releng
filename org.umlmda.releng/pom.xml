@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
    <groupId>org.umlmda</groupId>
    <artifactId>org.umlmda.releng</artifactId>
@@ -7,10 +8,17 @@
    <description>UMLMDA maven main project.</description>
    <packaging>pom</packaging>
 
+   <parent>
+      <groupId>org.sonatype.oss</groupId>
+      <artifactId>oss-parent</artifactId>
+      <version>7</version>
+   </parent>
+
    <organization>
       <name>UMLMDA</name>
       <url>http://www.umlmda.org</url>
    </organization>
+   <url>http://www.umlmda.org</url>
 
    <!-- developers and contributors -->
    <developers>
@@ -51,28 +59,10 @@
       </developer>
    </developers>
 
-   <!-- external communication and system setup -->
-   <distributionManagement>
-      <repository>
-         <uniqueVersion>true</uniqueVersion>
-         <id>ftpUmlmdaReleases</id>
-         <name>UMLMDA Repository (libs-releases)</name>
-         <url>ftp://ftp.strato.com/releases</url>
-      </repository>
-      <snapshotRepository>
-         <uniqueVersion>false</uniqueVersion>
-         <name>UMLMDA Repository (libs-snapshots)</name>
-<!--          <id>ftpUmlmdaSnapshots</id> -->
-<!--          <url>ftp://ftp.strato.com/snapshots</url> -->
-         <id>sftpUmlmdaSnapshots</id>
-<!--          <url>sftp://ssh.strato.de/umlmda/m2repo/snapshots</url> -->
-         <url>scp://ssh.strato.de:umlmda/m2repo/snapshots</url>
-      </snapshotRepository>
-   </distributionManagement>
-
    <scm>
       <connection>https://github.com/umlmda/releng.git</connection>
       <developerConnection>https://github.com/umlmda/releng.git</developerConnection>
+      <url>https://github.com/umlmda/releng/tree/master/org.umlmda.releng</url>
    </scm>
 
    <!-- dependency management and dependencies to inherit -->
@@ -177,25 +167,21 @@
       </plugins>
 
       <extensions>
-      <!-- wagon extension for deploying artefacts to artifactory 
+         <!-- wagon extension for deploying artefacts to artifactory <extension> 
+            <groupId>org.apache.maven.wagon</groupId> <artifactId>wagon-webdav</artifactId> 
+            <version>1.0-beta-2</version> </extension> -->
+         <!-- Enabling the use of FTP -->
          <extension>
             <groupId>org.apache.maven.wagon</groupId>
-            <artifactId>wagon-webdav</artifactId>
-            <version>1.0-beta-2</version>
+            <artifactId>wagon-ftp</artifactId>
+            <version>2.4</version>
          </extension>
-      -->
-	      <!-- Enabling the use of FTP -->
-	      <extension>
-	        <groupId>org.apache.maven.wagon</groupId>
-	         <artifactId>wagon-ftp</artifactId>
-	         <version>2.4</version>
-	      </extension>
-	      <extension>
-	        <groupId>org.apache.maven.wagon</groupId>
-	         <artifactId>wagon-ssh</artifactId>
-<!-- 	         <version>2.4</version> -->
-	      </extension>
-	  </extensions>
+         <extension>
+            <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-ssh</artifactId>
+            <!-- <version>2.4</version> -->
+         </extension>
+      </extensions>
    </build>
 
    <profiles>
@@ -245,10 +231,8 @@
                <plugin>
                   <groupId>org.apache.maven.plugins</groupId>
                   <artifactId>maven-javadoc-plugin</artifactId>
-                  <!--
-                     <executions> <execution> <id>attach-javadocs</id> <goals> <goal>jar</goal> </goals> </execution>
-                     </executions>
-                  -->
+                  <!-- <executions> <execution> <id>attach-javadocs</id> 
+                     <goals> <goal>jar</goal> </goals> </execution> </executions> -->
                </plugin>
             </plugins>
          </build>
@@ -293,11 +277,9 @@
                   </executions>
                </plugin>
 
-               <!--
-                  javadoc <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId>
-                  <executions> <execution> <id>attach-javadocs</id> <goals> <goal>jar</goal> </goals> </execution> </executions>
-                  </plugin>
-               -->
+               <!-- javadoc <plugin> <groupId>org.apache.maven.plugins</groupId> 
+                  <artifactId>maven-javadoc-plugin</artifactId> <executions> <execution> <id>attach-javadocs</id> 
+                  <goals> <goal>jar</goal> </goals> </execution> </executions> </plugin> -->
             </plugins>
          </build>
       </profile>
@@ -351,11 +333,9 @@
                   </executions>
                </plugin>
 
-               <!--
-                  javadoc <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId>
-                  <executions> <execution> <id>attach-javadocs</id> <goals> <goal>jar</goal> </goals> </execution> </executions>
-                  </plugin>
-               -->
+               <!-- javadoc <plugin> <groupId>org.apache.maven.plugins</groupId> 
+                  <artifactId>maven-javadoc-plugin</artifactId> <executions> <execution> <id>attach-javadocs</id> 
+                  <goals> <goal>jar</goal> </goals> </execution> </executions> </plugin> -->
             </plugins>
          </build>
       </profile>
